@@ -39,6 +39,32 @@ def index():
     return render_template('index.html', videos=filtered_videos, search_query=search_query)
 
 
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        video_file = request.files.get('video-file')
+        video_url = request.form.get('video-url')
+        video_title = request.form.get('video-title')
+        video_tags = request.form.get('video-tags')
+
+        # Валидация и обработка данных
+        if not video_title:
+            return "Название ролика обязательно", 400
+
+        # Здесь можно добавить логику сохранения файлов и обработки данных.
+        # Например, сохранение файла если он был загружен:
+        if video_file:
+            video_file.save(f"uploads/{video_file.filename}")
+
+        print("Видео файл:", video_file.filename if video_file else "Нет файла")
+        print("Видео URL:", video_url)
+        print("Название ролика:", video_title)
+        print("Теги:", video_tags)
+
+        return f"Данные загружены. Название: {video_title}, URL: {video_url}"
+
+        # Если метод GET, отображаем HTML страницу для загрузки видео
+    return render_template('upload.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
