@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
 import os
+# pip install pymilvus
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '12345'
