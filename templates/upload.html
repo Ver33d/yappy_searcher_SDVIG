@@ -1,74 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Загрузка Видео</title>
     <style>
+        /* Устанавливаем box-sizing для всех элементов, чтобы включать padding и border в общую ширину и высоту */
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Общие стили для всего тела страницы */
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f9;
+            font-family: Arial, sans-serif; /* Шрифт для текста на странице */
+            margin: 0; /* Убираем внешние отступы */
+            padding: 20px; /* Внутренние отступы вокруг всего содержимого */
+            background-color: #121212; /* Темный фон страницы */
+            color: #ffffff; /* Белый текст */
+            display: flex; /* Flex контейнер для центрирования содержимого */
+            justify-content: center; /* Центрируем по горизонтали */
+            align-items: center; /* Центрируем по вертикали */
+            height: 100vh; /* Высота вьюпорта для центрирования по вертикали */
         }
 
+        /* Стили для контейнера формы */
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Максимальная ширина контейнера */
+            width: 90%; /* Ширина контейнера на 90% экрана для адаптивности */
+            padding: 20px; /* Внутренние отступы внутри контейнера */
+            background: #333; /* Темный фон контейнера */
+            border-radius: 8px; /* Скругленные углы контейнера */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень вокруг контейнера для объема */
         }
 
+        /* Стили для заголовка */
         h1 {
-            text-align: center;
-            margin-bottom: 20px;
+            text-align: center; /* Центрирование текста заголовка */
+            margin-bottom: 20px; /* Отступ снизу заголовка */
         }
 
+        /* Стили для групп элементов формы */
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px; /* Отступ снизу группы элементов формы для разделения */
         }
 
+        /* Стили для меток элементов формы */
         .form-group label {
-            display: block;
-            margin-bottom: 5px;
+            display: block; /* Блочный элемент */
+            margin-bottom: 5px; /* Отступ снизу метки */
+            font-size: 16px; /* Размер шрифта меток */
         }
 
+        /* Стили для текстовых полей, URL полей, полей для файлов и текстовых областей */
         .form-group input[type="text"],
         .form-group input[type="url"],
         .form-group input[type="file"],
         .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            width: 100%; /* Ширина 100% контейнера */
+            padding: 12px; /* Внутренние отступы внутри полей */
+            border: 1px solid #ddd; /* Светлый контур вокруг полей */
+            background: #222; /* Темный фон полей */
+            color: #fff; /* Белый текст внутри полей */
+            border-radius: 4px; /* Скругленные углы полей */
         }
 
+        /* Стили для текстовой области (для тегов) */
         .form-group textarea {
-            resize: vertical;
-            height: 80px;
+            resize: vertical; /* Вертикальное изменение размера */
+            height: 80px; /* Высота текстовой области */
         }
 
+        /* Стили для кнопки */
         .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
+            display: block; /* Блочный элемент */
+            width: 100%; /* Ширина 100% контейнера */
+            padding: 12px; /* Внутренние отступы внутри кнопки */
+            background-color: #00e5bc; /* фон кнопки */
+            color: black; /* Цвет текста кнопки */
+            border: none; /* Без контура */
+            border-radius: 4px; /* Скругленные углы кнопки */
+            font-size: 18px; /* Размер шрифта кнопки */
+            cursor: pointer; /* Указатель при наведении */
         }
 
+        /* Стили для кнопки при наведении */
         .btn:hover {
-            background-color: #218838;
+            background-color: #07b395; /* Темно-зеленый фон при наведении */
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Загрузка Видео</h1>

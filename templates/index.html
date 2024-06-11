@@ -4,29 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Главная страница</title>
+    <style>
+        /* Общие стили для всей страницы */
+        body {
+            background-color: #121212; /* Темный фон страницы */
+            color: #ffffff; /* Белый текст на странице */
+            font-family: Arial, sans-serif; /* Шрифт для текста на странице */
+            margin: 0; /* Убирает внешний отступ страницы */
+            padding: 20px; /* Внутренний отступ страницы */
+            display: flex; /* Делает body контейнером flex */
+            flex-direction: column; /* Элементы внутри body располагаются в столбик */
+            align-items: center; /* Центрирует содержимое по горизонтали */
+        }
+
+        /* Стили для заголовка */
+        h1 {
+            text-align: center; /* Выравнивание текста заголовка по центру */
+            margin-bottom: 20px; /* Отступ снизу заголовка */
+        }
+
+        /* Стили для кнопки "Загрузить" */
+        .upload-btn {
+            background-color: #00e5bc; /* Фон кнопки */
+            color: black; /* Цвет текста кнопки */
+            padding: 10px 20px; /* Внутренний отступ кнопки */
+            text-decoration: none; /* Убирает подчеркивание текста */
+            font-size: 18px; /* Размер шрифта текста */
+            border-radius: 5px; /* Скругление углов кнопки */
+            display: block; /* Блочное отображение кнопки (новая строка до и после) */
+            margin: 20px auto; /* Автоматический отступ слева и справа для центрирования */
+            transition: background-color 0.3s; /* Плавное изменение цвета при наведении */
+        }
+
+        .upload-btn:hover {
+            background-color: #07b395; /* Темно-зеленый фон при наведении */
+        }
+
+        /* Стили для формы поиска */
+        form {
+            text-align: center; /* Центрирует содержимое формы */
+            width: 100%; /* Ширина формы равна ширине контейнера */
+            margin: 20px 0; /* Вертикальные отступы сверху и снизу */
+        }
+
+        input[type="text"] {
+            padding: 10px; /* Внутренний отступ поля ввода */
+            width: 40%; /* Ширина поля ввода */
+            border: none; /* Убирает рамку поля */
+            border-radius: 5px; /* Скругление углов поля */
+        }
+
+        button {
+            padding: 10px 20px; /* Внутренний отступ кнопки */
+            background-color: #00e5bc; /* фон кнопки, как у кнопки "Загрузить" */
+            color: black; /* Цвет текста кнопки */
+            border: none; /* Убирает рамку кнопки */
+            border-radius: 5px; /* Скругление углов кнопки */
+            cursor: pointer; /* Курсор в виде указателя при наведении */
+        }
+
+        button:hover {
+            background-color: #07b395; /* Темно-зеленый фон при наведении */
+        }
+
+        /* Контейнер для видео */
+        .video-container {
+            display: flex; /* Делает контейнер flex */
+            flex-direction: column; /* Элементы в контейнере располагаются в столбик */
+            align-items: center; /* Центрирует видео по горизонтали */
+            width: 100%; /* Ширина контейнера равна ширине родителя */
+        }
+
+        /* Стили для каждого блока видео */
+        .video-box {
+            display: flex; /* Делает блок видео flex контейнером */
+            align-items: center; /* Выравнивает содержимое по центру по вертикали */
+            background-color: #333; /* Темный фон для видео */
+            padding: 10px; /* Внутренний отступ вокруг видео */
+            border-radius: 5px; /* Скругление углов блока видео */
+            width: 650px; /* Фиксированная ширина блока видео */
+            margin-bottom: 10px; /* Отступ между блоками видео */
+            justify-content: space-between; /* Распределяет содержимое по краям блока */
+        }
+
+        /* Стили для видео */
+        video {
+            width: 480px; /* Ширина видеоплеера */
+            height: 270px; /* Высота видеоплеера */
+            border-radius: 5px; /* Скругление углов видеоплеера */
+        }
+
+        /* Стили для параграфа с тегами */
+        p {
+            margin-left: 10px; /* Отступ слева от видео */
+            color: #bbb; /* Серый цвет текста тегов */
+            flex: 1; /* Занимает оставшееся пространство в блоке */
+            text-align: left; /* Выравнивание текста тегов по левому краю */
+        }
+    </style>
 </head>
 <body>
 <h1>Видео Проигрыватель</h1>
 
-    <div style="margin-bottom: 20px;"> <!-- Добавьте отступ снизу, если нужно -->
-        <a href="/upload" style="text-decoration: none; display: inline-flex; align-items: center;">
-            <span style="font-size: 24px;">+</span> Загрузить
-        </a>
-    </div>
+<a href="/upload" class="upload-btn">+ Загрузить</a>
 
-       <form method="POST">
-           <input type="text" name="search" placeholder="Введите тег для поиска" value="{{ search_query }}">
-           <button type="submit">Поиск</button>
-       </form>
+<form method="POST">
+    <input type="text" name="search" placeholder="Введите тег для поиска" value="{{ search_query }}">
+    <button type="submit">Поиск</button>
+</form>
 
-       {% for video in videos %}
-           <div>
-               <video width="320" height="240" controls>
-                   <source src="{{ video.url }}" type="video/mp4">
-                   Your browser does not support the video tag.
-               </video>
-               <p>Tags: {{ ', '.join(video.tags) }}</p>
-           </div>
-       {% endfor %}
+<div class="video-container">
+    {% for video in videos %}
+        <div class="video-box">
+            <video controls>
+                <source src="{{ video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>Tags: {{ ', '.join(video.tags) }}</p>
+        </div>
+    {% endfor %}
+</div>
 </body>
 </html>
