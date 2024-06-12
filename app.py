@@ -1,35 +1,36 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, flash, session
+from pymilvus import connections, Collection
 import os
-# pip install pymilvus
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '12345'
 IMG_FOLDER = os.path.join("static", "photo")
 
 
-videos = [
-       {
-           "url": "https://cdn-st.rutubelist.ru/media/0f/48/8a1ff7324073947a31e80f71d001/fhd.mp4",
-           "tags": ["постановка", "юмор", "комедия"]
-       },
-       {
-           "url": "https://cdn-st.rutubelist.ru/media/bf/ee/85fb6b80491db79e8baebe5c9d80/fhd.mp4",
-           "tags": ["образ", "селебрити", "кроссовки"]
-       },
-       {
-           "url": "https://cdn-st.rutubelist.ru/media/8c/58/96608b7a4834883ea2dd1c884c63/fhd.mp4",
-           "tags": ["Бейрут", "Ливан"]
-       },
-       {
-           "url": "https://cdn-st.rutubelist.ru/media/2f/4f/6b969c8c4a2aafcfca057b2a99a2/fhd.mp4",
-           "tags": ["спорт", "футбол", "роналду"]
-       },
+def get_links_and_descriptions():
+    # Устанавливаем соединение с Milvus
+    connections.connect(alias="default", host="127.0.0.1", port="19530")
 
-   ]
+    # Получаем объект коллекции
+    collection = Collection("proverka")
+
+    if collection.is_empty:
+        print("Коллекция пуста")
+        return []
+
+    # Загрузка всех данных из коллекции
+    links_and_descriptions = collection.query("", output_fields=["link", "description"], limit=100)
+
+    # Создаем список словарей для Flask приложения
+    videos = [{"url": item["link"], "tags": [item["description"]]} for item in links_and_descriptions]
+
+    return videos
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    videos = get_links_and_descriptions()  # Получаем видео из Milvus
+    print(videos)
     search_query = request.form.get('search', '')
     if search_query:
         filtered_videos = [
@@ -48,24 +49,16 @@ def upload():
         video_title = request.form.get('video-title')
         video_tags = request.form.get('video-tags')
 
-        # Валидация и обработка данных
         if not video_title:
             return "Название ролика обязательно", 400
 
-        # Здесь можно добавить логику сохранения файлов и обработки данных.
-        # Например, сохранение файла если он был загружен:
         if video_file:
             video_file.save(f"uploads/{video_file.filename}")
 
-        print("Видео файл:", video_file.filename if video_file else "Нет файла")
-        print("Видео URL:", video_url)
-        print("Название ролика:", video_title)
-        print("Теги:", video_tags)
-
         return f"Данные загружены. Название: {video_title}, URL: {video_url}"
 
-        # Если метод GET, отображаем HTML страницу для загрузки видео
     return render_template('upload.html')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
