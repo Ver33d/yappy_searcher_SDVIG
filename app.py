@@ -84,8 +84,8 @@ def upload():
                 tags = item.get('tags', None)  # Установка None если теги отсутствуют
                 # Извлечение характеристик видео
                 embedding = extract_video_features(link, model_clip)
-                ocr_text = extract_text_from_video(link)
-                print("ocr_text", ocr_text)
+                #ocr_text = extract_text_from_video(link)
+                #print("ocr_text", ocr_text)
                 # Вставка данных в Milvus
                 insert_video_to_milvus(link, tags, embedding)
 
