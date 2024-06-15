@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Загрузка Видео</title>
     <style>
-        /* Устанавливаем box-sizing для всех элементов, чтобы включать padding и border в общую ширину и высоту */
+        /* Устанавливаем box-sizing для всех элементов, чтобы включать padding и border в общую шируну и высоту */
         * {
             box-sizing: border-box;
         }
@@ -31,6 +31,7 @@
             background: #333; /* Темный фон контейнера */
             border-radius: 8px; /* Скругленные углы контейнера */
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень вокруг контейнера для объема */
+            position: relative; /* Относительное позиционирование для корректного расположения кнопки назад */
         }
 
         /* Стили для заголовка */
@@ -87,23 +88,45 @@
         .btn:hover {
             background-color: #07b395; /* Темно-зеленый фон при наведении */
         }
+
+        /* Стили для круглой кнопки Назад */
+        .btn-back {
+            position: absolute; /* Абсолютное позиционирование */
+            top: 20px; /* Отступ сверху */
+            left: 20px; /* Отступ слева */
+            width: 50px; /* Ширина кнопки */
+            height: 50px; /* Высота кнопки */
+            border-radius: 50%; /* Делаем кнопку круглой */
+            display: flex; /* Используем flex для центрирования иконки или текста */
+            justify-content: center; /* Центрирование содержимого по горизонтали */
+            align-items: center; /* Центрирование содержимого по вертикали */
+            text-decoration: none; /* Убираем подчеркивание текста */
+            background-color: #555; /* Серый фон кнопки */
+            color: white; /* Белый текст */
+            font-size: 24px; /* Размер шрифта */
+            cursor: pointer; /* Указатель при наведении */
+        }
+
+        .btn-back:hover {
+            background-color: #07b395; /* Светло-зеленый фон при наведении */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Загрузка Видео</h1>
-        <form action="/submit-video" method="POST" enctype="multipart/form-data">
+        <h1>Укажите url видео клипа</h1>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="video-file">Выберите видеофайл (MP4):</label>
-                <input type="file" id="video-file" name="video-file" accept="video/mp4">
-            </div>
-            <div class="form-group">
-                <label for="video-url">Или укажите ссылку на видео (URL):</label>
+                <label for="video-url">Укажите ссылку на видео (URL):</label>
                 <input type="url" id="video-url" name="video-url" placeholder="https://example.com/video.mp4">
             </div>
             <div class="form-group">
+                <label for="video-links-file">Загрузите JSON файл с ссылками на видео файлы:</label>
+                <input type="file" id="video-links-file" name="video-links-file" accept=".json">
+            </div>
+            <div class="form-group">
                 <label for="video-title">Название ролика:</label>
-                <input type="text" id="video-title" name="video-title" required>
+                <input type="text" id="video-title" name="video-title">
             </div>
             <div class="form-group">
                 <label for="video-tags">Теги (через запятую):</label>
@@ -111,6 +134,7 @@
             </div>
             <button type="submit" class="btn">Загрузить Видео</button>
         </form>
+        <a href="/" class="btn btn-back">&#x2190;</a>
     </div>
 </body>
 </html>

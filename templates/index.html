@@ -104,7 +104,7 @@
     </style>
 </head>
 <body>
-<h1>Видео Проигрыватель</h1>
+<h1>Поисковик Yappy</h1>
 
 <a href="/upload" class="upload-btn">+ Загрузить</a>
 
@@ -114,6 +114,7 @@
 </form>
 
 <div class="video-container">
+    {% if videos %}
     {% for video in videos %}
         <div class="video-box">
             <video controls>
@@ -123,6 +124,10 @@
             <p>Tags: {{ ', '.join(video.tags) }}</p>
         </div>
     {% endfor %}
+{% else %}
+    <p>Для отображения видео введите название.</p>
+{% endif %}
+
 </div>
 </body>
 </html>
