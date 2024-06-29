@@ -3,7 +3,7 @@ json
 einops 
 pillow
 opencv-python
-timm transformers
+timm
 tqdm
 pandas
 torch
